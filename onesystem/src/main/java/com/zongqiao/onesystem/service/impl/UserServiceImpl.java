@@ -17,8 +17,6 @@ public class UserServiceImpl implements UserService {
 		
 		userDao.insert(user);
 		
-		
-		
 		return false;
 	}
 	
