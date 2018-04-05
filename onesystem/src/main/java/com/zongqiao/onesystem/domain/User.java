@@ -112,4 +112,14 @@ public class User {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	@Override
+	public String toString() { 
+		return "User [userId=" + userId + ", userName=" + userName + ", nickName=" + nickName + ", telephone="
+				+ telephone + ", password=" + password + ", email=" + email + ", emailActive=" + emailActive
+				+ ", isLogin=" + isLogin + ", isDeleted=" + isDeleted + ", createTime=" + createTime + ", updateTime="
+				+ updateTime + "]";
+	}
+    
+    
 }
