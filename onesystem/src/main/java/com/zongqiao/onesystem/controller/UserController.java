@@ -29,19 +29,14 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/getCheckCode.do")
     public String getCheckCode(HttpServletRequest request,String phoneNumber){
-    	System.out.println("phoneNumber->" + phoneNumber);
     	HttpSession session = request.getSession();
     	//初始化返回值
     	String code = "";
         //获取session中：sessionId、手机号、验证码
     	String sessionId = session.getId();
-    	System.out.println("sessionId->" + sessionId);
     	String sessionCode = sessionId + "-" + phoneNumber;
-    	System.out.println("sessionCode->" + sessionCode);
-    	System.out.println("session-code->" + session.getAttribute(sessionCode));
         code = VerificationCodeUtil.getInstance().getVerificationCode();
         session.setAttribute(sessionCode, sessionId + "-" + phoneNumber + "-" + code);
-        System.out.println(code);
         System.out.println("放在session中的验证码->" + session.getAttribute(sessionCode));
     	return code;
     }
