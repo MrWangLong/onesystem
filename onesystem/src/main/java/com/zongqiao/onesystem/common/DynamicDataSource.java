@@ -4,7 +4,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 public class DynamicDataSource extends AbstractRoutingDataSource{
 	
-	private static boolean isDefault = false;
+	private static boolean isDefault = true;
 	
 	public static void detemenieDefaultDataSource(){
 		
