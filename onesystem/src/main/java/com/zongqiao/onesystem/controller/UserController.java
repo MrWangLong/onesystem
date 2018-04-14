@@ -2,18 +2,19 @@ package com.zongqiao.onesystem.controller;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zongqiao.onesystem.domain.User;
-import com.zongqiao.onesystem.util.VerificationCodeUtil;
+import com.zongqiao.onesystem.service.UserService;
+import com.zongqiao.onesystem.test.LogTest;
 
 /**
  * 
@@ -26,11 +27,44 @@ import com.zongqiao.onesystem.util.VerificationCodeUtil;
 @RequestMapping(value = "/user")
 public class UserController
 {
-	// 注册
+	private static Logger logger = Logger.getLogger(UserController.class);
+
+	@Autowired
+	@Qualifier("userService")
+	private UserService userService;
+
+	/**
+	 * 
+	 * @param session
+	 * @param user:
+	 * @param code:验证码
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping(value = "/register.do")
-	public void register(User user, String code)
-	{
-		System.out.println("user:" + user + "<-->code" + code);
+	public String register(HttpSession session, User user, String code)
+	{   String msg = "";
+		// session中验证码属性名称和值
+		String sessionCheckCodeName = session.getId() + "-" + user.getTelephone();
+		String sessionCheckCodeValue = (String) session.getAttribute(sessionCheckCodeName);
+		String sessionCheckCode = null;
+		if (sessionCheckCodeValue != null)
+		{
+			String[] strArr = sessionCheckCodeValue.split("-");
+			sessionCheckCode = strArr[0];
+		}
+
+		if (code.equals(sessionCheckCode))
+		{
+			// 传入的验证码和session中的一致
+			if(userService.register(user))
+			msg = "注册中";
+		} else
+		{
+			// 传入的验证码和session中的不一致
+			msg = "传入的验证码和session中的不一致";
+		}
+		return msg;
 	}
 
 	// 获取验证码
@@ -38,11 +72,12 @@ public class UserController
 	@RequestMapping(value = "/getCheckCode.do")
 	public String getCheckCode(HttpSession session, String phoneNumber)
 	{
-		//验证码
+		logger.info("-----------获取验证码-----------");
+		// 验证码
 		String code = null;
-		//是否存活（true:无需生成，false需要重新生成）
+		// 是否存活（true:无需生成，false需要重新生成）
 		boolean isActive = false;
-		//session中验证码属性名称和值
+		// session中验证码属性名称和值
 		String sessionCheckCodeName = session.getId() + "-" + phoneNumber;
 		String sessionCheckCodeValue = null;
 		if (session.getAttribute(sessionCheckCodeName) != null)

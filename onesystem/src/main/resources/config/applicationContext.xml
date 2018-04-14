@@ -10,21 +10,22 @@
          http://www.springframework.org/schema/aop    http://www.springframework.org/schema/aop/spring-aop.xsd
         ">
 
-	<context:property-placeholder location="classpath:config/jdbc.properties" /> 
-	
-	<bean id = "dataSource" class="com.zongqiao.onesystem.common.DynamicDataSource">
-	  <property name="targetDataSources">
-	    <map key-type="java.lang.String">
-	     <entry key="master" value-ref="masterDataSource" />
-	     <entry key="slave" value-ref="slaveDataSource" />  
-	    </map>
-	  </property>
-	   <property name="defaultTargetDataSource" ref="defaultDataSource" />
+	<context:property-placeholder location="classpath:config/jdbc.properties" />
+
+	<bean id="dataSource" class="com.zongqiao.onesystem.common.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="master" value-ref="masterDataSource" />
+				<entry key="slave" value-ref="slaveDataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="defaultDataSource" />
 	</bean>
 
 	<!-- dataSource数据源配置 -->
 	<!-- 默认库 -->
-	<bean id="defaultDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="defaultDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
 		<!-- 数据源驱动类 -->
 		<property name="driverClass" value="${mysql.jdbc.default.driverClassName}" />
 		<!-- 基本属性 url、user、password -->
@@ -36,7 +37,8 @@
 		<property name="maxPoolSize" value="${mysql.jdbc.pool.default.maxActive}" />
 	</bean>
 	<!-- 主库 -->
-	<bean id="masterDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="masterDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
 		<!-- 数据源驱动类 -->
 		<property name="driverClass" value="${mysql.jdbc.master.driverClassName}" />
 		<!-- 基本属性 url、user、password -->
@@ -48,7 +50,8 @@
 		<property name="maxPoolSize" value="${mysql.jdbc.pool.master.maxActive}" />
 	</bean>
 	<!-- 从库 -->
-	<bean id="slaveDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="slaveDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
 		<!-- 数据源驱动类 -->
 		<property name="driverClass" value="${mysql.jdbc.slave.driverClassName}" />
 		<!-- 基本属性 url、user、password -->
@@ -59,72 +62,79 @@
 		<property name="initialPoolSize" value="${mysql.jdbc.pool.slave.initialSize}" />
 		<property name="maxPoolSize" value="${mysql.jdbc.pool.slave.maxActive}" />
 	</bean>
-	
-	
+
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="mapperLocations" value="classpath:com/zongqiao/onesystem/dao/impl/*.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:com/zongqiao/onesystem/dao/impl/*.xml"></property>
 	</bean>
 
-	<bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.zongqiao.onesystem.dao"></property>
 	</bean>
-	
-	
+
+
 
 	<context:component-scan base-package="com.zongqiao.onesystem" />
 
-	<mvc:annotation-driven />
-     
-     <!-- 视图解析器 -->
-     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-      <property name="prefix" value="/html/"></property>   
-      <property name="suffix" value=".html"></property>
-     </bean>
-     
-     <!-- 事务配置 -->
-	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
-		<property name="dataSource" ref="dataSource" />
-	 </bean> 
+	<mvc:annotation-driven>
+		<!-- 解决@ResponseBody中文乱码 -->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
-	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> --> 
-		
-	 <!-- 定义事务策略 -->  
-     <tx:advice id="txAdvice" transaction-manager="transactionManager">  
-        <tx:attributes>  
-            <!--定义查询方法都是只读的 -->  
-            <tx:method name="query*" read-only="true" />  
-            <tx:method name="find*" read-only="true" />  
-            <tx:method name="get*" read-only="true" />  
-  
-            <!-- 主库执行操作，事务传播行为定义为默认行为 -->  
-            <tx:method name="add*" propagation="REQUIRED" /> 
-             <tx:method name="save*" propagation="REQUIRED" />   
-            <tx:method name="update*" propagation="REQUIRED" />  
-            <tx:method name="delete*" propagation="REQUIRED" />  
-  
-            <!--其他方法使用默认事务策略 -->  
-            <tx:method name="*" />  
-        </tx:attributes>  
-     </tx:advice> 
-     
-     <bean class="com.zongqiao.onesystem.common.DataSourceAspect" id="dataSourceAspect">  
-        <!-- 指定事务策略 -->  
-        <property name="txAdvice" ref="txAdvice"/>  
-        <!-- 指定slave方法的前缀（非必须） -->  
-        <property name="slaveMethodStart" value="query,find,get"/>  
-    </bean>  
-    
-  
-    <aop:config>  
-        <!-- 定义切面，所有的service的所有方法 -->  
-        <aop:pointcut id="txPointcut" expression="execution(* com.zongqiao.onesystem.service.*.*(..))" />  
-        <!-- 应用事务策略到Service切面 -->  
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>  
-          
-        <!-- 将切面应用到自定义的切面处理器上，-9999保证该切面优先级最高执行 -->  
-        <aop:aspect ref="dataSourceAspect" order="-9999">  
-            <aop:before method="before" pointcut-ref="txPointcut" />  
-        </aop:aspect>  
-    </aop:config> 
+	<!-- 视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/html/"></property>
+		<property name="suffix" value=".html"></property>
+	</bean>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+	<!-- 定义事务策略 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!--定义查询方法都是只读的 -->
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<!-- 主库执行操作，事务传播行为定义为默认行为 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<!--其他方法使用默认事务策略 -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean class="com.zongqiao.onesystem.common.DataSourceAspect" id="dataSourceAspect">
+		<!-- 指定事务策略 -->
+		<property name="txAdvice" ref="txAdvice" />
+		<!-- 指定slave方法的前缀（非必须） -->
+		<property name="slaveMethodStart" value="query,find,get" />
+	</bean>
+
+	<aop:config>
+		<!-- 定义切面，所有的service的所有方法 -->
+		<aop:pointcut id="txPointcut"
+			expression="execution(* com.zongqiao.onesystem.service.*.*(..))" />
+		<!-- 应用事务策略到Service切面 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+		<!-- 将切面应用到自定义的切面处理器上，-9999保证该切面优先级最高执行 -->
+		<aop:aspect ref="dataSourceAspect" order="-9999">
+			<aop:before method="before" pointcut-ref="txPointcut" />
+		</aop:aspect>
+	</aop:config>
 </beans>

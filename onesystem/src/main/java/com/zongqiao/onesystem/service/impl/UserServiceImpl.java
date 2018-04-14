@@ -15,9 +15,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean register(User user) {
 		
-		userDao.insert(user);
-		
-		return false;
+		return userDao.insert(user) == 1?true:false;
 	}
 	
 	
