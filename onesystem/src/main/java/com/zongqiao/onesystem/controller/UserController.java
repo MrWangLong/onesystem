@@ -12,10 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.zongqiao.onesystem.domain.User;
 import com.zongqiao.onesystem.service.UserService;
-import com.zongqiao.onesystem.test.LogTest;
-
 /**
  * 
  * 用户控制层
@@ -62,7 +61,7 @@ public class UserController
 		} else
 		{
 			// 传入的验证码和session中的不一致
-			msg = "传入的验证码和session中的不一致";
+			msg = "传入的验证码和session中的不一致!";
 		}
 		return msg;
 	}
