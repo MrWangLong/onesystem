@@ -35,7 +35,7 @@ public class UserController
 	/**
 	 * 
 	 * @param session
-	 * @param user:
+	 * @param user:用户
 	 * @param code:验证码
 	 * @return
 	 */
