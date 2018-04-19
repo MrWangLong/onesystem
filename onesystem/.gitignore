@@ -1,1 +1,7 @@
 /target/
+/.classpath
+/pom.xml
+/.gitignore
+/.settings/
+/.project
+/.tern-project
