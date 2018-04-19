@@ -1,9 +1,8 @@
-com\zongqiao\onesystem\service\PersonService.class
-com\zongqiao\onesystem\controller\TestController.class
+com\zongqiao\onesystem\domain\User.class
+com\zongqiao\onesystem\service\UserService.class
 com\zongqiao\onesystem\common\DataSourceAspect.class
-com\zongqiao\onesystem\dao\User.class
 com\zongqiao\onesystem\common\DynamicDataSource.class
-com\zongqiao\onesystem\dao\PersonMapper.class
-com\zongqiao\onesystem\domain\Person.class
+com\zongqiao\onesystem\service\impl\UserServiceImpl.class
+com\zongqiao\onesystem\dao\UserMapper.class
 com\zongqiao\onesystem\common\DynamicDataSourceHolder.class
-com\zongqiao\onesystem\service\impl\PersonServiceImpl.class
+com\zongqiao\onesystem\configuration\WebMvcConfig.class
