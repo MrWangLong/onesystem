@@ -1,5 +1,5 @@
 $(function(){
-	
+	//<a href="#" onClick="getCheckCode();">获取验证码</a>
 });
 function getCheckCode(){
 	$.ajax({
