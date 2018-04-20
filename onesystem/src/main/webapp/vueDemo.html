@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>vue练习</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui">
+</head>
+<body>
+	<h1>学习vue.js</h1>
+	<div id="message">{{helloWorld}}</div> 
+	<div id="now">
+		<span v-bind:title="title">鼠标悬停此处几秒， 可以看到此处动态绑定的 title！</span>
+	</div>
+	<script type="text/javascript">
+		var title = new Vue({
+			el   : '#now',
+			data : {
+				title: '页面加载于 ' + new Date().toLocaleString()
+			}
+		});
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./vueDemo.js"></script>
+</html>
