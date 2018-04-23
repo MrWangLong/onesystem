@@ -9,7 +9,7 @@ public class User {
 
     private String nickName;
 
-    private String telephone;
+    private String telephone; 
 
     private String password;
 
