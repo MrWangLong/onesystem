@@ -12,16 +12,40 @@
 	<div id="now">
 		<span v-bind:title="title">鼠标悬停此处几秒， 可以看到此处动态绑定的 title！</span>
 	</div>
-	<script type="text/javascript">
-		var title = new Vue({
-			el   : '#now',
-			data : {
-				title: '页面加载于 ' + new Date().toLocaleString()
-			}
-		});
-	</script>
-
-
+	<div id="demo-3"> 
+	 <span v-if="seen">现在你能看见我</span>
+	</div>
+	<div id="demo-4"> 
+	 <ol>
+	  <li v-for="user in users">  
+	   {{user.text}}
+	  </li>
+	 </ol>
+	</div>
+    <div id="demo-5">  
+	 <p>{{message}}</p>
+	 <p>{{joke}}</p>
+	 <button v-on:click="reverseMessage">点击翻转</button>
+	</div>
+	<div id="demo-6">  
+	 <p>{{message}}</p>
+	 <input v-model="message" />
+	</div>
+	<!--                     component                         -->
+	<!-- <div id="demo-7">
+	<ol>
+		<todo-item ></todo-item>
+	</ol>
+	</div> -->
+	<div id="demo-8">
+	<ol>
+		<todo-item v-for="item in items" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+	</ol>
+	</div> 
+	<div id="demo-9">
+	 <p>等待翻转的字符串{{message}}</p>
+	 <p>翻转之后的字符串{{}}</p>
+	</div>
 
 
 
