@@ -3,7 +3,6 @@
       <router-view></router-view>
   </div>
 </template>
-
 <script>
 
 
@@ -37,17 +36,7 @@
     text-decoration: none;
     color: #333;
   }
-  /*
-  .lf {
-    float: left
-  }
 
-  .rt {
-    float: right
-  }
-  .over {
-    overflow: hidden
-  }*/
 
   body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd {
     margin: 0px;
@@ -65,16 +54,7 @@
     text-decoration: none;
     color: #333;
   }
-  .lf {
-    float: left
-  }
 
-  .rt {
-    float: right
-  }
-  .over {
-    overflow: hidden
-  }
 
   html,body{
     width: 100%;
