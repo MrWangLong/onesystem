@@ -37,7 +37,6 @@
     color: #333;
   }
 
-
   body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd {
     margin: 0px;
     padding: 0px;
@@ -54,7 +53,6 @@
     text-decoration: none;
     color: #333;
   }
-
 
   html,body{
     width: 100%;
