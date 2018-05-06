@@ -1,12 +1,12 @@
 <template>
   <div>
-    首页
+    登录
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Index',
+  name: 'Login',
   data () {
     return {
 
