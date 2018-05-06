@@ -1,4 +1,22 @@
-body{
-	background:url("../image/background.jpg") no-repeat fixed top ;
-	background-size:100% 100%;
+body {
+	background: url("../image/background.jpg") no-repeat fixed top;
+	background-size: 100% 100%;
+	background-size: cover;
+	color: #ffffff
+}
+
+.form-group label {
+	font-size: 1.8rem;
+}
+
+.form-group input {
+	padding: 0rem 0.4rem;
+	font-size: 1.8rem;
+	color: #ffffff;
+	border: none;
+	background: none;
+	border-bottom: 0.15rem solid #ffffff;
+	margin-top: 0.4rem;  
+	padding-bottom: 0.1rem;
+	outline:none;
 }

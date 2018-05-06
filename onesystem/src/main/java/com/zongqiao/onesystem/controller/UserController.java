@@ -31,7 +31,7 @@ public class UserController
 	@Autowired
 	@Qualifier("userService")
 	private UserService userService;
-
+	
 	/**
 	 * 
 	 * @param session
