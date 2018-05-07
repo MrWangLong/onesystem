@@ -72,6 +72,7 @@ public class UserController
 	public String getCheckCode(HttpSession session, String phoneNumber)
 	{
 		logger.info("-----------获取验证码-----------");
+		System.err.println(session.getId());
 		// 验证码
 		String code = null;
 		// 是否存活（true:无需生成，false需要重新生成）
