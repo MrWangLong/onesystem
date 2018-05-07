@@ -2,12 +2,16 @@ new Vue({
   el : '#registerForm',
   data : {
 	  telephone : '',
-	  checkCode : "123456"
+	  checkCode : '',
+	  password  : '', 
+	  rePassword: ''
   },
   methods:{
+	  getCheckCode:function(){
+		  
+	  },
 	  submitForm:function(){
-		  alert(this.telephone + ":::::"  + this.checkCode);
-		  return;
+		  
 	  }
   }
 });
