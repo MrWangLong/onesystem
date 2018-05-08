@@ -1,7 +1,7 @@
 <template>
   <div class="register-page">
     <div class="page-top">
-      Pretend have logo.
+      <p>Pretend have a logo.</p>
     </div>
     <form class="register-form">
       <div class="form-item">
@@ -48,8 +48,9 @@ export default {
           return ;
         }
         //获取验证码
-        var url = "/api/onesystem/user/getCheckCode.do";
-        this.$http.post(url,{phoneNumber:JSON.stringify(this.phone)},{emulateJSON:true})
+        var url = "/onesystem/user/getCheckCode.do";
+       this.$http.post(url,{phoneNumber:JSON.stringify(this.phone)},{emulateJSON:true})
+       //this.$axios.post(url,{phoneNumber:JSON.stringify(this.phone)},{emulateJSON:true})
         .then(
             function(data){
               console.log(data.data);
@@ -80,9 +81,9 @@ export default {
   }
   /* 页面上部分 */
   .page-top{
-    height: 6rem;
-    vertical-align: middle;
+    line-height: 8rem;
   }
+
   /* 注册表单部分 */
   .form-item{
     text-align: left;

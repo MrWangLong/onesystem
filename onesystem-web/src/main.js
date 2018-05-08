@@ -6,12 +6,20 @@ import router from './router'
 import Mint from  'mint-ui'
 import VueResource from 'vue-resource'
 
+//import axios from 'axios'
+
+//axios.defaults.withCredentials=true;//让ajax携带cookie
+
 Vue.use(Mint)
+//Vue.prototype.$axios = axios;
 Vue.use(VueResource)
 
 import  'mint-ui/lib/style.css'
 
 Vue.config.productionTip = false
+Vue.http.options.xhr = {withCredentials: true};
+
+
 
 /* eslint-disable no-new */
 new Vue({
