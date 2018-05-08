@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zongqiao.onesystem.domain.User;
 import com.zongqiao.onesystem.service.UserService;
+
+import net.sf.json.JSONObject;
 /**
  * 
  * 用户控制层
@@ -69,7 +71,7 @@ public class UserController
 	// 获取验证码
 	@ResponseBody
 	@RequestMapping(value = "/getCheckCode.do")
-	public String getCheckCode(HttpSession session, String phoneNumber)
+	public JSONObject getCheckCode(HttpSession session, String phoneNumber)
 	{
 		logger.info("-----------获取验证码-----------");
 		// 验证码
@@ -105,8 +107,11 @@ public class UserController
 			long createTime = new Date().getTime();
 			session.setAttribute(sessionCheckCodeName, code + "-" + createTime);
 		}
-
-		return code;
+        
+		//返回值
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("code", code);
+		return jsonObject;
 	}
 
 }

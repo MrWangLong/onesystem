@@ -28,6 +28,7 @@
 
 <script>
   import { Toast } from 'mint-ui';
+  import {MessageBox} from 'mint-ui';
 
 export default {
     name: 'Register',
@@ -53,7 +54,10 @@ export default {
        //this.$axios.post(url,{phoneNumber:JSON.stringify(this.phone)},{emulateJSON:true})
         .then(
             function(data){
-              console.log(data.data);
+              MessageBox(
+                '提示',
+                '验证码' + data.data
+              )
             },
             function (error) {
               console.log(error.data);
