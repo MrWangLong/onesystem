@@ -69,7 +69,6 @@ public class UserController
 	}
 
 	// 获取验证码
-	@ResponseBody
 	@RequestMapping(value = "/getCheckCode.do")
 	public JSONObject getCheckCode(HttpSession session, String phoneNumber)
 	{
