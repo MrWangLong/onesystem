@@ -11,7 +11,7 @@
       <div class="form-item">
         <label for="checkCode">验证码</label><br>
         <input type="text" id="checkCode"  placeholder="请输入验证码"  v-model="checkCode" />
-        <button type="button" @click="getCheckCode">获取验证码</button>
+        <button type="button" @click="getCheckCode()">获取验证码</button>
       </div>
       <div class="form-item">
         <label for="password">输入密码</label>
@@ -21,7 +21,7 @@
         <label for="rePassword">输入密码</label>
         <input type="password" id="rePassword"  placeholder="请确认密码" v-model="rePassword" />
       </div>
-      <button class="register-submit" type="submit" >注册账号</button>
+      <button class="register-submit" type="submit" @click="register()" >注册账号</button>
     </form>
   </div>
 </template>
@@ -56,13 +56,42 @@ export default {
             function(data){
               MessageBox(
                 '提示',
-                '验证码' + data.data
+                '验证码' + data.data.code
               )
             },
             function (error) {
               console.log(error.data);
             }
         )
+      },
+      register(){
+        if(!(/^1[34578]\d{9}$/.test(this.phone))){
+          Toast("手机号不正确");
+          return false;
+        }
+        if(this.checkCode == ''){
+          Toast("请输入验证码");
+          return false;
+        }
+        if(this.password == ''){
+          Toast("请输入密码");
+          return false;
+        }
+        if(this.password.toString().size() < 6){
+          Toast("密码长度不能小于6");
+          return false;
+        }
+        if(this.rePassword == ''){
+          Toast("请确认密码");
+          return false;
+        }
+        if(this.password != this.rePassword){
+          Toast("两次输入密码不一致");
+          return false;
+        }
+        alert('可以提交了');
+
+        return;
       }
     }
 }

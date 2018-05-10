@@ -84,6 +84,8 @@
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<constructor-arg value="UTF-8" />
 			</bean>
+			<!-- 解决对象转json问题  值为null问题 -->
+            <!-- <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/> --> 
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
