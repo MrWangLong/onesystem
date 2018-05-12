@@ -44,7 +44,9 @@ public class UserController
 	@ResponseBody
 	@RequestMapping(value = "/register.do")
 	public String register(HttpSession session, User user, String code)
-	{   String msg = "";
+	{ 
+		System.out.println("user->" + user + ",code->" + code);
+		String msg = "";
 		// session中验证码属性名称和值
 		String sessionCheckCodeName = session.getId() + "-" + user.getTelephone();
 		String sessionCheckCodeValue = (String) session.getAttribute(sessionCheckCodeName);
@@ -54,7 +56,7 @@ public class UserController
 			String[] strArr = sessionCheckCodeValue.split("-");
 			sessionCheckCode = strArr[0];
 		}
-
+        System.out.println(code + ":::" + sessionCheckCode); 
 		if (code.equals(sessionCheckCode))
 		{
 			// 传入的验证码和session中的一致

@@ -50,7 +50,7 @@ export default {
         }
         //获取验证码
         var url = "/onesystem/user/getCheckCode.do";
-       this.$http.post(url,{phoneNumber:JSON.stringify(this.phone)},{emulateJSON:true})
+       this.$http.post(url,{phoneNumber:this.phone},{emulateJSON:true})
        //this.$axios.post(url,{phoneNumber:JSON.stringify(this.phone)},{emulateJSON:true})
         .then(
             function(data){
@@ -65,6 +65,15 @@ export default {
         )
       },
       register(){
+        //数据校验
+        var isValidated =  this.validate();
+        if(isValidated){
+        //校验成功 保存
+          this.save();
+        }
+      },
+      validate(){
+         //校验数据
         if(!(/^1[34578]\d{9}$/.test(this.phone))){
           Toast("手机号不正确");
           return false;
@@ -77,7 +86,7 @@ export default {
           Toast("请输入密码");
           return false;
         }
-        if(this.password.toString().size() < 6){
+        if(this.password.length < 6){
           Toast("密码长度不能小于6");
           return false;
         }
@@ -89,9 +98,23 @@ export default {
           Toast("两次输入密码不一致");
           return false;
         }
-        alert('可以提交了');
-
-        return;
+        return true;
+      },
+      save(){
+         var url = '/onesystem/user/register.do';
+         var data = {
+           telephone:this.phone,
+           password:this.password,
+           code:this.checkCode
+         }
+         this.$http.post(url,data,{emulateJSON:true}).then(
+         function(success){
+             alert(success + 'success')
+         },
+         function(error){
+             alert(error + 'error')
+         }
+         )
       }
     }
 }
