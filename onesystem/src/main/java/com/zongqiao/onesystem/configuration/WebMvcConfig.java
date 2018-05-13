@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    // 设置跨域访问
+	 // 设置跨域访问
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

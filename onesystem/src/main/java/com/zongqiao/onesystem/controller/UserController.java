@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zongqiao.onesystem.domain.User;
 import com.zongqiao.onesystem.service.UserService;
+
+import net.sf.json.JSONObject;
 /**
  * 
  * 用户控制层
@@ -42,7 +44,9 @@ public class UserController
 	@ResponseBody
 	@RequestMapping(value = "/register.do")
 	public String register(HttpSession session, User user, String code)
-	{   String msg = "";
+	{ 
+		System.out.println("user->" + user + ",code->" + code);
+		String msg = "";
 		// session中验证码属性名称和值
 		String sessionCheckCodeName = session.getId() + "-" + user.getTelephone();
 		String sessionCheckCodeValue = (String) session.getAttribute(sessionCheckCodeName);
@@ -52,7 +56,7 @@ public class UserController
 			String[] strArr = sessionCheckCodeValue.split("-");
 			sessionCheckCode = strArr[0];
 		}
-
+        System.out.println(code + ":::" + sessionCheckCode); 
 		if (code.equals(sessionCheckCode))
 		{
 			// 传入的验证码和session中的一致
@@ -69,7 +73,7 @@ public class UserController
 	// 获取验证码
 	@ResponseBody
 	@RequestMapping(value = "/getCheckCode.do")
-	public String getCheckCode(HttpSession session, String phoneNumber)
+	public JSONObject getCheckCode(HttpSession session, String phoneNumber)
 	{
 		logger.info("-----------获取验证码-----------");
 		// 验证码
@@ -105,8 +109,11 @@ public class UserController
 			long createTime = new Date().getTime();
 			session.setAttribute(sessionCheckCodeName, code + "-" + createTime);
 		}
-
-		return code;
+        
+		//返回值
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("code", code);
+		return jsonObject;
 	}
 
 }
