@@ -7,6 +7,8 @@ import Register from '@/components/user/Register'
 Vue.use(Router)
 
 export default new Router({
+  /*mode:'history',
+  base: '/onesystem/',*/
   routes: [
     {
       path: '/',
