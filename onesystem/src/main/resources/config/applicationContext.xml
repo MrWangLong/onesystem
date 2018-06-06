@@ -139,4 +139,7 @@
 			<aop:before method="before" pointcut-ref="txPointcut" />
 		</aop:aspect>
 	</aop:config>
+	
+	<!-- 引入redis配置 -->
+	<import resource="./spring-redis.xml"/>
 </beans>
